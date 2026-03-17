@@ -1,8 +1,10 @@
-# ThreatLens 🔍
+# ThreatLens 
 
-A personal threat intelligence aggregator and risk scoring engine. Pulls raw indicator data from VirusTotal, AbuseIPDB, and Shodan, correlates it, applies time-decayed risk scoring, and clusters similar threats by behavior — turning noisy threat feeds into actionable signal.
+A personal threat intelligence aggregator and risk scoring engine. Pulls raw indicator data from VirusTotal, AbuseIPDB, and Shodan, correlates it, applies time-decayed risk scoring, and clusters similar threats by behavior... turning noisy threat feeds into actionable signal :)
 
-> Built for personal research use. Not a commercial product.
+> Built for personal research use. Again as said for someone who utilizes tools...
+> this is going to be useful.
+> Not a commercial product.
 
 ---
 
@@ -35,11 +37,9 @@ All API calls happen server-side. Keys never touch the browser.
 ---
 
 ## Screenshots
+<img width="1920" height="1200" alt="Screenshot 2026-03-18 005706" src="https://github.com/user-attachments/assets/0000da4f-def1-4feb-8b18-65170e2d1490" />
 
-> Drop screenshots here after your first run. Suggested shots:
-> - Dashboard with a mixed IOC result set
-> - An expanded IP card showing all 3 source panels
-> - The clusters tab with grouped threats
+<img width="1920" height="1200" alt="Screenshot 2026-03-18 005643" src="https://github.com/user-attachments/assets/b332d409-6b2c-4eac-bebd-adbe36a7dc65" />
 
 ---
 
@@ -86,8 +86,8 @@ ThreatLens/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/threatlens.git
-cd threatlens
+git clone https://github.com/JAIMNBIDU/ThreatLens.git
+cd ThreatLens
 ```
 
 ### 2. Backend
@@ -120,9 +120,9 @@ cp .env.example .env   # Windows: copy .env.example .env
 
 Edit `.env` with your keys:
 ```
-VIRUSTOTAL_API_KEY=your_key_here
-ABUSEIPDB_API_KEY=your_key_here
-SHODAN_API_KEY=your_key_here
+VIRUSTOTAL_API_KEY=put_the_api_key_from_your_account
+ABUSEIPDB_API_KEY=put_the_api_key_from_your_account
+SHODAN_API_KEY=put_the_api_key_from_your_account
 ```
 
 ```bash
@@ -142,9 +142,9 @@ Verify it's running — open `http://localhost:8000` in your browser:
 }
 ```
 
-All three must show `true`. If any show `false`, check your `.env` file.
+All three must show `true`. If any show `false`, check your `.env` file. (If not in individual lines, then in a single line for those who are just using without reading the code)
 
-Interactive API docs available at `http://localhost:8000/docs`.
+Interactive API docs will be available at `http://localhost:8000/docs`.
 
 ### 3. Frontend
 
@@ -323,7 +323,7 @@ Singletons (IOCs with no similar peers) are shown but labeled separately.
 
 - **Shodan free tier**: 100 queries/month. Burns fast on large IP batches. Use the paid tier or be selective.
 - **VirusTotal rate limit**: 4 requests/minute on free tier. The backend semaphore caps concurrency at 5, but large batches will queue.
-- **No persistence**: Results are in-memory only. Refresh the page and they're gone. A database layer would fix this.
+- **No persistence**: Results are in-memory only. Refresh the page and they're gone. A database layer would fix this and might implement it in the future on some related projects.
 - **CORS**: Currently set to `allow_origins=["*"]`. Tighten this before any public deployment.
 
 ---

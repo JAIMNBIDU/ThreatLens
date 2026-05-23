@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ─── Config ───────────────────────────────────────────────────────────────────
+# Config 
 VT_KEY       = os.getenv("VIRUSTOTAL_API_KEY", "")
 ABUSE_KEY    = os.getenv("ABUSEIPDB_API_KEY", "")
 SHODAN_KEY   = os.getenv("SHODAN_API_KEY", "")
@@ -42,7 +42,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ─── Models ───────────────────────────────────────────────────────────────────
+# Models 
 class IOCRequest(BaseModel):
     iocs: list[str]
 
@@ -65,7 +65,7 @@ class BulkRequest(BaseModel):
         return [i.strip() for i in v if i.strip()]
 
 
-# ─── IOC Type Detection ───────────────────────────────────────────────────────
+# IOC Type Detection 
 def detect_type(ioc: str) -> str:
     if re.match(r"^(\d{1,3}\.){3}\d{1,3}$", ioc):
         return "ipv4"
@@ -76,7 +76,7 @@ def detect_type(ioc: str) -> str:
     return "domain"
 
 
-# ─── Time Decay ───────────────────────────────────────────────────────────────
+# Time Decay
 def time_decay(days_ago: int) -> float:
     return math.exp(-math.log(2) * days_ago / HALF_LIFE_DAYS)
 
@@ -92,7 +92,7 @@ def days_since(dt_str: Optional[str]) -> int:
         return 0
 
 
-# ─── VirusTotal ───────────────────────────────────────────────────────────────
+# VirusTotal 
 async def fetch_virustotal(ioc: str, ioc_type: str, client: httpx.AsyncClient) -> dict:
     if not VT_KEY:
         return {"error": "No VirusTotal API key configured", "available": False}
@@ -173,7 +173,7 @@ async def fetch_virustotal(ioc: str, ioc_type: str, client: httpx.AsyncClient) -
         return {"error": str(e), "available": False}
 
 
-# ─── AbuseIPDB ────────────────────────────────────────────────────────────────
+# AbuseIPDB 
 async def fetch_abuseipdb(ip: str, client: httpx.AsyncClient) -> dict:
     if not ABUSE_KEY:
         return {"error": "No AbuseIPDB API key configured", "available": False}
@@ -210,7 +210,7 @@ async def fetch_abuseipdb(ip: str, client: httpx.AsyncClient) -> dict:
         return {"error": str(e), "available": False}
 
 
-# ─── Shodan ───────────────────────────────────────────────────────────────────
+# Shodan
 async def fetch_shodan(ip: str, client: httpx.AsyncClient) -> dict:
     if not SHODAN_KEY:
         return {"error": "No Shodan API key configured", "available": False}
@@ -268,7 +268,7 @@ async def fetch_shodan(ip: str, client: httpx.AsyncClient) -> dict:
         return {"error": str(e), "available": False}
 
 
-# ─── Risk Scoring Engine ──────────────────────────────────────────────────────
+# Risk Scoring Engine 
 def compute_risk_score(vt: dict, abuse: dict, shodan: dict, ioc_type: str) -> dict:
     # VirusTotal component
     vt_score = 0.0
@@ -343,7 +343,7 @@ def compute_risk_score(vt: dict, abuse: dict, shodan: dict, ioc_type: str) -> di
     }
 
 
-# ─── Behavioral Tag Extraction ────────────────────────────────────────────────
+# Behavioral Tag Extraction 
 def extract_tags(vt: dict, abuse: dict, shodan: dict) -> list[str]:
     tags = set()
     tags.update(vt.get("tags", []))
@@ -370,7 +370,7 @@ def extract_tags(vt: dict, abuse: dict, shodan: dict) -> list[str]:
     return sorted(tags)[:12]
 
 
-# ─── Jaccard Clustering ───────────────────────────────────────────────────────
+# Jaccard Clustering
 def jaccard(a: list, b: list) -> float:
     sa, sb = set(a), set(b)
     if not sa and not sb:
@@ -414,7 +414,7 @@ def cluster_iocs(enriched: list[dict]) -> list[dict]:
     return clusters
 
 
-# ─── Core Enrichment ──────────────────────────────────────────────────────────
+# Core Enrichment
 async def _not_applicable() -> dict:
     """Placeholder for sources that don't apply to a given IOC type."""
     return {"available": False, "skipped": True}
@@ -456,7 +456,7 @@ async def enrich_ioc(ioc: str) -> dict:
     }
 
 
-# ─── Routes ───────────────────────────────────────────────────────────────────
+# Routes
 @app.get("/")
 async def root():
     return {

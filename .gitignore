@@ -1,0 +1,65 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# SECRETS — never commit. Order matters: ignore first, then re-include examples.
+# ─────────────────────────────────────────────────────────────────────────────
+.env
+.env.*
+*.env
+.envrc
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+# keep the template tracked so people can copy it
+!.env.example
+!*.env.example
+
+# ─── Databases / runtime data (SQLite cache + history) ───────────────────────
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+data/
+backend/data/
+
+# ─── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+# virtualenvs (any name, any location)
+venv/
+.venv/
+env/
+ENV/
+
+# ─── Node / Vite (frontend) ──────────────────────────────────────────────────
+node_modules/
+threatlens-ui/node_modules/
+threatlens-ui/dist/
+dist/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.local
+
+# ─── Editors / OS cruft ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ─── Logs ────────────────────────────────────────────────────────────────────
+*.log
+logs/

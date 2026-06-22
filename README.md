@@ -194,6 +194,3 @@ All via `backend/.env` (see `.env.example` for the complete list):
 
 ---
 
-## License
-
-Add a license file before publishing — `MIT` is the usual choice for a project like this. Without one, others can view the code but have no legal right to use it.
